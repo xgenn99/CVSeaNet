@@ -13,7 +13,6 @@ class MyAccuracy(Metric):
     if x_off.shape != x_off_truth.shape:
       raise ValueError("preds and target must have the same shape")
     off_loss_masked = self.l1_loss(x_off, x_off_truth)*x_hm_truth
-    
     self.off_loss = torch.mean(off_loss_masked[off_loss_masked != 0])
 
   def compute(self):
