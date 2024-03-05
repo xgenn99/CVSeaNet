@@ -9,8 +9,7 @@ class CVSeaNet(nn.Module):
     - in_channels (int): the input channels of the image
     - in_resolution (int): the resolution of the starting image
     - backbone_params (list): list of [model number, architecture]
-    - head_params (list): list of 
-    [architecture_head_hm, architecture_head_off ,blocktype]
+    - score_threshold (int): the threshold used for classification (ship/background)
     - real_conv_block(bool)=False: it activates the real convolution backbone,
     - data_fusion(bool)=False: if True activates data fusion
     - early_data_fusion(bool)=False: if True activates early data fusion
