@@ -44,18 +44,12 @@ class MS3Dataset_CSK(Dataset):
         target = torch.tensor(target, dtype=self.dtype)
         inc_angle = torch.tensor(inc_angle, dtype=self.dtype)
 
-        # if self.transform:
-        #     x_real_vh = (x_real_vh - x_real_vh.min())/(x_real_vh.max()-x_real_vh.min())
-        #     x_imag_vh = (x_imag_vh - x_imag_vh.min())/(x_imag_vh.max()-x_imag_vh.min())
-        
-
         if not self.real_conv:
             sample = torch.stack((x_real_vh, x_imag_vh))       
             if self.transform:
                 sample = torchvision.transforms.Normalize([-0.0009, 0.0003], [0.1484, 0.1482])(sample)
         else:
             sample = torch.sqrt(x_real_vh **2 + x_imag_vh **2).unsqueeze(0)
-            # print(sample.shape, sample)
             if self.transform:
                 sample = torchvision.transforms.Normalize(0.1222, 0.1718)(sample)
 
@@ -76,7 +70,6 @@ class MS3Dataset_CSK(Dataset):
             raise e
 
     def build_path_img(self, filename):
-        # "Im_01_PROD_1_PIN_1_SUB_1_CSKS2_SCS_B_HI_04_HH_RD_SF_20200213170417_20200213170424_Cal_SUB0.dim.tif.png"
 
         img_idx = filename.split("Im_")[1].split("_PROD")[0]
         prod_idx = filename.split("PROD_")[1].split("_PIN")[0]
@@ -110,5 +103,3 @@ class MS3Dataset_CSK(Dataset):
             data = json.load(file_coco)
 
         return data
-
-
