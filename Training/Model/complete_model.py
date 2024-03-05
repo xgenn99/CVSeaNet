@@ -76,14 +76,6 @@ class CVSeaNet(nn.Module):
                                 real_conv_block=self.real_conv_block)
         self.head = Head(in_channels=in_channels_head, score_threshold=self.score_threshold,
                 real_conv_block=self.real_conv_block)
-        # resnet = torchvision.models.resnet50()
-        # resnet.conv1 = nn.Conv2d(in_channels=2, out_channels=64, kernel_size=7, stride=2, padding=3, bias=False)
-        # convolutional_part = nn.Sequential(*list(resnet.children())[:-2])
-        # self.backbone = convolutional_part
-        # self.head = Head(in_channels=2048, score_threshold=self.score_threshold,
-        #                 real_conv_block=self.real_conv_block)
-
-        
         print(self.backbone)
         print(self.head)
         
@@ -98,12 +90,7 @@ class CVSeaNet(nn.Module):
             inc_angle_early = inc_angle.expand(size=(x.shape[0], 1, x.shape[2], x.shape[3]))
 
         if self.real_conv_block:
-            
-            # x_real = x[:, :self.in_channels, ...]
-            # x_imag = x[:, self.in_channels:, ...]
-
-            # x = torch.sqrt(x_real **2 + x_imag **2)
-        
+                    
             if self.early_df_bool:
         
                 if self.df_mode == "cat":
@@ -142,12 +129,8 @@ class CVSeaNet(nn.Module):
 
                     raise ValueError("The mode for early data fusion can be only strings of (cat, +, *)") 
         
-        # print(f"input: {x}")
         x = self.backbone(x)
         check_nan(x)
-
-        # print(f"\n out back {x}") 
-        # print(f"\nx shape after backbone {x.shape}")
 
         if self.late_df_bool:
 
@@ -171,9 +154,6 @@ class CVSeaNet(nn.Module):
 
         x_hm_out, x_off_out = self.head(x)
         check_nan(x)
-
-        # print(f"hm and hf shape after head: {x_hm_out.shape, x_off_out.shape}")
-        # print(f"hm after head: {x_hm_out}")
 
         return {'Keypoints heatmap': x_hm_out, 'Offset heatmap': x_off_out, 'Scale Parameter': self.in_resolution/x_hm_out.shape[-1]}
 
