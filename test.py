@@ -13,16 +13,10 @@ backbone_type_id = state['hyper_parameters']['backbone_type_id']
 backbone_architecture = state['hyper_parameters']['backbone_architecture']
 score_threshold = state['hyper_parameters']['score_threshold']
 real_conv_block = state['hyper_parameters']['real_conv_block']
-data_fusion = state['hyper_parameters']['data_fusion']
-early_data_fusion = state['hyper_parameters']['early_data_fusion']
-late_data_fusion = state['hyper_parameters']['late_data_fusion']
-data_fusion_mode = state['hyper_parameters']['data_fusion_mode']
 model = CVSeaNet(in_channels=in_channels, in_resolution=in_res, backbone_params=[backbone_type_id, backbone_architecture],
-                 score_threshold=score_threshold, real_conv_block=real_conv_block, data_fusion=data_fusion,
-                 early_data_fusion=early_data_fusion, late_data_fusion=late_data_fusion, data_fusion_mode=data_fusion_mode).to(device='cuda', dtype=torch.float16)
+                 score_threshold=score_threshold, real_conv_block=real_conv_block).to(device='cuda', dtype=torch.float16)
 state_dict_without_prefix = {key.replace('model.', ''): value for key, value in state['state_dict'].items()}     
 model.load_state_dict(state_dict_without_prefix)
-#fix model without incidence angle
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5555
 #missing part to load image -need to define a function with rasterio and trasform
