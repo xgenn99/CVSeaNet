@@ -7,12 +7,6 @@ import numpy as np
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 class Backbone(nn.Module):
     r"""Backbone based on efficientNet, but applied on complex numbers
-    Arguments: 
-    - in_channels (int): input_channels
-    - architecture (list): the architecture of th network as a list of tuple or str in the form
-      (expansion paramater, output channels, kernel size, stride, repetition of the layer)
-    - model (int): specifies which EfficientNet model it uses (from 0 to 7)
-    - real_conv_block (bool)=False: If true activates real convolutional blocks
     """
     def __init__(self, in_channels: int, architecture: list, model: int, real_conv_block=False):
         super().__init__()
@@ -22,7 +16,6 @@ class Backbone(nn.Module):
         self.df = depth_factor
         self.wf = width_factor
         self.real_conv_block = real_conv_block
-
 
         self.ConvNet = self._create_layers(architecture=architecture)
 
@@ -70,8 +63,6 @@ class Backbone(nn.Module):
                 ComplexConv2d(in_channels=self.in_channels, out_channels=back_in_channels, kernel_size=3, stride=2,
                               padding=0, bias=False),
                 ComplexReLU6(inplace=True),
-                # ComplexBatchNorm2d(back_in_channels),
-                # nn.BatchNorm2d(back_in_channels*2),
             )
         
         else:
@@ -138,18 +129,15 @@ class ComplexMBConvBlock(nn.Module):
                 ComplexConv2d(in_channels=self.in_feat, out_channels=self.hidden_units,
                                             kernel_size=1, stride=1, padding=0, bias=self.bias),
                 ComplexReLU6(inplace=True),
-                # ComplexBatchNorm2d(self.hidden_units),
                 nn.BatchNorm2d(self.hidden_units*2),
                 ComplexDwConv2d(in_channels=self.hidden_units,kernel_size=self.kernel_size,
                           stride=self.stride, padding=self.padding, bias=self.bias),
-                # ComplexBatchNorm2d(self.hidden_units),
                 nn.BatchNorm2d(self.hidden_units*2),
                 ComplexReLU6(inplace=True),
                 ComplexSqueezeExcitation(in_channels=self.hidden_units, reduced_dim=self.reduced_dim_se),
                 ComplexConv2d(in_channels=self.hidden_units, out_channels=self.out_feat,
                                             kernel_size=1, stride=1, padding=0, bias=self.bias),
                 nn.BatchNorm2d(self.out_feat*2),
-                # ComplexBatchNorm2d(self.out_feat),
             )
             
         else:
