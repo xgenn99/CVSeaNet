@@ -4,7 +4,7 @@ from Model.Backbone.backbone_fun import Backbone
 from Model.Head.head_fun import Head
 
 class CVSeaNet(nn.Module):
-    """Defines the MS3 OD net
+    """Defines CVSeaNet
     Arguments:
     - in_channels (int): the input channels of the image
     - in_resolution (int): the resolution of the starting image
