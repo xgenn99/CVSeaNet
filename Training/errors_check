@@ -1,0 +1,3 @@
+se c'è un errore nello shape match nella loss function, bisogna andare a modificare la variabile in "shape_img"
+in DataModule.py nella cartella Dataset e matcharlo con la struttura della testa in output. Devono avere 
+lo stesso shape perche sono entrambe heatmap
