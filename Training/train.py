@@ -56,6 +56,7 @@ if __name__ == "__main__":
     EPOCHS = int(config['Training']['epochs'])
 
     assert IN_CHANNELS == 1, "in_channels must be 1 because only one polarization is considered"
+    
 # PRE-TRAINING
     # torch.set_float32_matmul_precision("medium")
     logger = TensorBoardLogger("tb_logs", name="fist_training_v0")
