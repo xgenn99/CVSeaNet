@@ -44,23 +44,15 @@ class MS3Dataset_SEN(Dataset):
           target = torch.tensor(target, dtype=self.dtype)
           inc_angle = torch.tensor(inc_angle, dtype=self.dtype)
 
-          # if self.transform:
-          #      x_real_vh = (x_real_vh - x_real_vh.min())/(x_real_vh.max()-x_real_vh.min())
-          #      x_imag_vh = (x_imag_vh - x_imag_vh.min())/(x_imag_vh.max()-x_imag_vh.min())
-          
           if self.real_conv == False:
                sample = torch.stack((x_real_vh, x_imag_vh))
                if self.transform:
                     sample = torchvision.transforms.Normalize([-0.0009, 0.0003], [0.1484, 0.1482])(sample)
-                    # sample[:, 0, ...] = (sample[:, 0, ...] - -0.0009 )/ 0.1484
-                    # sample[:, 1, ...] = (sample[:, 1, ...] - 0.0003)/ 0.1482
           else:
                sample = torch.sqrt(x_real_vh **2 + x_imag_vh **2).unsqueeze(0)
                if self.transform:
                     sample = torchvision.transforms.Normalize(0.1222, 0.1718)(sample)
-                    # sample = (sample - 0.1222) / 0.1718
 
-          
           return {"sample": sample.to(dtype=self.dtype), "target": target, "inc_angle": inc_angle}
 
      def loader_img(self, file_path):
