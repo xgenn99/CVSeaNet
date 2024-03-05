@@ -7,7 +7,6 @@ from Model.Accuracy.OffsetAcc import MyAccuracy
 import torchmetrics
 from torch import nn
 from check_nan import check_nan
-from ray.tune.integration.pytorch_lightning import TuneReportCallback
 
 # %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 class CVSeaNet_light(pl.LightningModule):
