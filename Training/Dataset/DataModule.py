@@ -91,20 +91,3 @@ class MS3DataModule(pl.LightningDataModule):
     def test_dataloader(self) -> EVAL_DATALOADERS:
         return DataLoader(dataset=self.test_ds, batch_size=self.bs, num_workers=self.num_workers,
                            shuffle=False, collate_fn=custom_collate)
-    
-    # @staticmethod
-    # def mean_std(ds):
-    #     print("Normilizing input data")
-    #     mean_sum = 0
-    #     std_sum = 0
-    #     for i in tqdm(range(ds.__len__())):
-    #         img = ds.__getitem__(i)["sample"]
-    #         mean_sum += torch.sum(img.to(torch.float64), dim=(1, 2))
-    #         std_sum += torch.sum(img.to(torch.float64)**2, dim=(1, 2))
-    #         if i % 10 ==0 :
-    #             print(f"i: {i} | sum_img: {mean_sum} | sum_square_img: {std_sum}")
-    #     count = ds.__len__() * 2048 * 2048
-    #     mean = mean_sum/count
-    #     std = torch.sqrt(std_sum/count - mean**2)
-    #     print(f"mean: {mean} | std: {std}")
-    #     return mean, std
