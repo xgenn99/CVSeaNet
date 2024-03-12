@@ -21,7 +21,6 @@ if __name__ == "__main__":
     DATA_PATH = [config['General']['data_dir_sen'], config['General']['data_dir_csk']]
     ANNOTATIONS_PATH = [config['General']['annotations_dir_sen'], config['General']['annotations_dir_csk']]
     NUM_WORKERS = int(config['General']['num_workers'])
-    STATE_PATH = config['General']['model_state_dir']
     SEED = int(config['General']['seed'])
     
     RESOLUTION = int(config['Input Data']['resolution'])
@@ -86,7 +85,6 @@ if __name__ == "__main__":
 # TRAINER
     trainer = pl.Trainer(logger=logger, max_epochs=EPOCHS, accelerator="gpu", precision=precision, log_every_n_steps=1)
     trainer.fit(model=model, datamodule=dm)
-    # trainer.validate(model, dm)
     trainer.test(model, dm)
 
     

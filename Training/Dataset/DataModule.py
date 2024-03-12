@@ -20,7 +20,7 @@ def custom_collate(batch):
     the value of the offset (shape of bs x 2 x out_size x out_size)
     """
 
-    shape_img = 4  #CHANGE HERE this is the shape of the output layer 16-512, 32-1024, 64-2048
+    shape_img = 4  #CHANGE HERE if there are problems in matching the output shape
     scale = batch[0]["sample"].shape[-1]/shape_img
     dtype = batch[0]["sample"].dtype
 
@@ -74,18 +74,12 @@ class MS3DataModule(pl.LightningDataModule):
                         transform=self.trans, dtype=self.dtype)
         ds = ConcatDataset([ds_sen, ds_csk])
         
-        # self.train_ds ,self.val_ds, self.test_ds = random_split(ds, [0.6, 0.2, 0.2])
         self.train_ds, self.test_ds = random_split(ds, [0.8, 0.2])
-        # self.train_ds, self.test_ds = random_split(ds, [0.0002, 0.9998])
 
     def train_dataloader(self) -> TRAIN_DATALOADERS:
 
         return DataLoader(dataset=self.train_ds, batch_size=self.bs, num_workers=self.num_workers,
                            shuffle=True, collate_fn=custom_collate)
-    
-    # def val_dataloader(self) -> EVAL_DATALOADERS:
-    #     return DataLoader(dataset=self.val_ds, batch_size=self.bs, num_workers=self.num_workers,
-    #                        shuffle=False, collate_fn=custom_collate)
     
     
     def test_dataloader(self) -> EVAL_DATALOADERS:

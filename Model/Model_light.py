@@ -86,8 +86,7 @@ class CVSeaNet_light(pl.LightningModule):
         f1 = self.hm_f1(y_preds, y_truth)
         prec = self.hm_prec(y_preds, y_truth)
         rec = self.hm_recall(y_preds, y_truth)
-    
-        # metrics = {'train_loss': loss, "train_acc_kp": acc_hm, "train_acc_offs": acc_offset}
+
         metrics = {'train_loss': loss, "train_acc": acc_hm, "train_precision": prec,
                    "train_mse_offs": acc_offset, "train_rec": rec,
                    "train_f1": f1}
@@ -96,25 +95,6 @@ class CVSeaNet_light(pl.LightningModule):
                        on_step=True, on_epoch=True, logger=True, prog_bar=True)
 
         return loss
-    
-    # def validation_step(self, batch, batch_idx):
-        
-    #     loss, y_preds, y_truth, off_preds, off_truth = self.common_box(batch)
-
-    #     acc_hm = self.accuracy(y_preds, y_truth)
-    #     f1 = self.hm_f1(y_preds, y_truth)
-    #     prec = self.hm_prec(y_preds, y_truth)
-    #     rec = self.hm_recall(y_preds, y_truth)
-    #     off_acc = self.off_metrics(off_preds, off_truth, y_truth)
-
-    #     metrics = {'val_loss': loss, "val_acc": acc_hm, "val_prec": prec,
-    #                "val_rec": rec, "val_f1": f1,
-    #                "val_acc_offs": off_acc}
-        
-    #     self.log_dict(metrics,
-    #                    on_step=False, on_epoch=True, logger=True, prog_bar=True)
-        
-    #     return metrics
     
     def test_step(self, batch, batch_idx):
         

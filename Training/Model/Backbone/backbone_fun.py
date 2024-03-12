@@ -103,7 +103,6 @@ class ComplexMBConvBlock(nn.Module):
     - real_conv (bool)=False: it is True if the convolution is real
     - bias(bool)=True: it is True if biases are added in the block layers
     """
-    ## hidden units must be bigger than input channels
     def __init__(self, in_channels: int, exp_factor: int, out_channels: int,
                 kernel_size_dw: int, stride_dw: int, reduced_dim_se: int,
                 real_conv_block=False, bias=True):

@@ -20,8 +20,6 @@ class CustomLoss(nn.Module):
           self.gamma = gamma
 
           self.hm_loss = CentNet_focal_loss(alpha=alpha, gamma=gamma)
-          # self.hm_loss = nn.BCELoss(reduction='sum')
-          # self.hm_loss = nn.SmoothL1Loss(reduction='sum')
           self.off_loss = nn.SmoothL1Loss(reduction='none')
 
 
